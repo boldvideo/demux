@@ -12,7 +12,7 @@ defmodule Demux.Application do
     children =
       [
         DemuxWeb.Telemetry,
-        Demux.Repo,
+        # Demux.Repo,
         !flame_parent &&
           {DNSCluster, query: Application.get_env(:demux, :dns_cluster_query) || :ignore},
         {Phoenix.PubSub, name: Demux.PubSub},
