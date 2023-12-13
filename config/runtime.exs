@@ -22,8 +22,14 @@ end
 
 if config_env() == :prod do
   config :flame, :backend, FLAME.FlyBackend
-  config :flame, FLAME.FlyBackend, token: System.fetch_env!("FLY_API_TOKEN"), boot_timeout: 60_000
-  config :flame, :terminator, log: :info
+
+  config :flame, FLAME.FlyBackend,
+    token: System.fetch_env!("FLY_API_TOKEN"),
+    boot_timeout: 120_000
+
+  config :flame, :terminator,
+    log: :debug,
+    shutdown_timeout: 60_000
 
   # database_url =
   #   System.get_env("DATABASE_URL") ||
@@ -32,7 +38,7 @@ if config_env() == :prod do
   #     For example: ecto://USER:PASS@HOST/DATABASE
   #     """
 
-  maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
+  # maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
 
   # config :demux, Demux.Repo,
   #   # ssl: true,

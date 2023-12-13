@@ -23,6 +23,11 @@ defmodule DemuxWeb.Endpoint do
     gzip: false,
     only: DemuxWeb.static_paths()
 
+  plug Plug.Static,
+    at: "/uploads",
+    from: "/app/uploads",
+    gzip: false
+
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
   if code_reloading? do

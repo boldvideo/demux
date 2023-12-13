@@ -19,9 +19,10 @@ defmodule DemuxWeb.HomeLive do
         </div>
       </div>
       <%= if assigns[:audio_path] do %>
-        <a href={~p"/uploads/#{Path.basename(@audio_path)}"}>
-          Download Audio
-        </a>
+        <audio controls>
+          <source src={~p"/uploads/#{Path.basename(@audio_path)}"} type="audio/mpeg" />
+        </audio>
+        <a href={~p"/uploads/#{Path.basename(@audio_path)}"}>Download</a>
       <% end %>
     </.form>
     """
@@ -44,21 +45,36 @@ defmodule DemuxWeb.HomeLive do
 
   def handle_progress(:video, entry, socket) do
     if entry.done? do
+      video_output_path =
+        Path.join(upload_path(), Ecto.UUID.generate())
+
+      Logger.info("File Upload done. Copying file to #{video_output_path}")
+
+      # audio_output_path =
+      #   Path.join(upload_path(), Ecto.UUID.generate())
+
       consume_uploaded_entry(socket, entry, fn meta ->
-        video_output_path = Path.join("priv/static/uploads", Path.basename(meta.path))
         File.cp(meta.path, video_output_path)
 
-        gen = VideoProcessor.open(input_path: video_output_path, caller: self())
+        Logger.info("Starting demuxing process...")
+        VideoProcessor.open(input_path: video_output_path, caller: self())
+        Logger.info("Demuxing initiated...")
 
-        {:ok,
-         socket
-         |> assign(gen: gen)}
+        {:ok, :ok}
       end)
-    end
 
-    {:noreply,
-     socket
-     |> assign(message: "Demuxing...")}
+      Logger.info("upload done")
+
+      {:noreply,
+       socket
+       # |> assign(audio_output_path: audio_output_path)
+       |> assign(file: Path.basename(video_output_path))
+       |> assign(message: "Upload done...")}
+    else
+      {:noreply,
+       socket
+       |> assign(message: "Uploading...")}
+    end
   end
 
   def handle_event("validate", _arams, socket) do
@@ -68,9 +84,23 @@ defmodule DemuxWeb.HomeLive do
   end
 
   def handle_info({_ref, :ok, audio_path}, socket) do
+    Logger.info("audio path: #{audio_path}")
+    Logger.info("assigngs path: #{socket.assigns.file}")
+
+    File.cp(audio_path, Path.join(upload_path(), Path.basename(audio_path)))
+    Logger.info("Audio File copied to #{Path.join(upload_path(), Path.basename(audio_path))}")
+
     {:noreply,
      socket
      |> assign(message: "Done! 🥳")
-     |> assign(audio_path: audio_path)}
+     |> assign(audio_path: socket.assigns.file <> ".mp3")}
+  end
+
+  defp upload_path do
+    if System.get_env("FLY_APP_NAME") do
+      "/app/uploads"
+    else
+      "priv/static/uploads"
+    end
   end
 end
