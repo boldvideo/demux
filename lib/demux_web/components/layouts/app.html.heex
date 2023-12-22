@@ -1,32 +1,95 @@
-<header class="px-4 sm:px-6 lg:px-8">
-  <div class="flex items-center justify-between border-b border-zinc-100 py-3 text-sm">
-    <div class="flex items-center gap-4">
-      <a href="/">
-        <img src={~p"/images/logo.svg"} width="36" />
-      </a>
-      <p class="bg-brand/5 text-brand rounded-full px-2 font-medium leading-6">
-        v<%= Application.spec(:phoenix, :vsn) %>
-      </p>
-    </div>
-    <div class="flex items-center gap-4 font-semibold leading-6 text-zinc-900">
-      <a href="https://twitter.com/elixirphoenix" class="hover:text-zinc-700">
-        @elixirphoenix
-      </a>
-      <a href="https://github.com/phoenixframework/phoenix" class="hover:text-zinc-700">
-        GitHub
-      </a>
-      <a
-        href="https://hexdocs.pm/phoenix/overview.html"
-        class="rounded-lg bg-zinc-100 px-2 py-1 hover:bg-zinc-200/80"
-      >
-        Get Started <span aria-hidden="true">&rarr;</span>
-      </a>
-    </div>
+<header class="h-11 mx-auto mt-4 mb-16 px-8 max-w-[1292px] flex justify-between items-center">
+  <div>
+    <a href="/">
+      <svg class="h-[39px]" viewBox="0 0 143 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clipPath="url(#clip0_1_60607)">
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M108.303 39V38.9935C108.303 30.7258 108.303 18.3243 108.303 1.78891C108.303 1.78891 115.614 0.863617 123.606 0.863617C139.776 0.863617 142.998 12.0905 142.998 22.0837C142.998 28.1358 141.183 34.594 137.026 39H108.303Z"
+            fill="#41EAD4"
+          />
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M105.924 39H76.4919C74.721 36.5671 73.7921 33.1761 73.7921 28.5607V1.23373H98.2643V27.0185L105.637 26.5867L105.924 39Z"
+            fill="#41EAD4"
+          />
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M66.6071 39H39.6987C35.9425 35.0734 33.7673 29.0952 33.7673 21.3434C33.7673 8.32763 42.0693 0 53.2831 0C64.6829 0 72.5512 8.32763 72.5512 21.3434C72.5512 29.0952 70.3417 35.0734 66.6071 39Z"
+            fill="#41EAD4"
+          />
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M0 39V1.23373H19.0822C27.3222 1.23373 30.8537 5.55176 30.8537 10.7951C30.8537 14.9281 29.5526 18.0741 26.8266 20.1097C31.4113 21.3434 33.6416 25.6614 33.6416 30.7197C33.6416 33.6704 33.0197 36.6786 30.9792 39H0Z"
+            fill="#41EAD4"
+          />
+        </g>
+        <defs>
+          <clipPath id="clip0_1_60607">
+            <rect width="143" height="39" fill="white" />
+          </clipPath>
+        </defs>
+      </svg>
+    </a>
+  </div>
+  <div class="flex-1 mx-auto text-center hidden sm:block">
+    <ul class="flex flex-col md:flex-row my-8 md:my-0 justify-center gap-x-8 font-semibold">
+      <li>
+        <a href="/#overview">Overview</a>
+      </li>
+      <li>
+        <a href="/#features">Features</a>
+      </li>
+      <li>
+        <a href="/#pricing">Pricing</a>
+      </li>
+      <li>
+        <a href="/blog">Blog</a>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <button class="px-4 py-2.5 text-sm inline-block h-fit w-fit rounded-lg font-medium transition-all disabled:cursor-not-allowed disabled:opacity-50 border border-turquoise-300 rounded-lg text-turquoise-300">
+      Log in
+    </button>
   </div>
 </header>
+
 <main class="px-4 py-20 sm:px-6 lg:px-8">
   <div class="mx-auto max-w-2xl">
     <.flash_group flash={@flash} />
     <%= @inner_content %>
   </div>
 </main>
+
+<footer class="flex flex-col pb-8 max-w-[1292px] mx-auto md:py-12 px-8 ">
+  <div class="max-w-md mx-auto mb-16 "></div>
+  <div class="md:flex items-center">
+    <div class="flex justify-center">
+      Logo
+    </div>
+    <div class="flex-1 mx-auto text-center">
+      <ul class="flex flex-col md:flex-row my-8 md:my-0 justify-center gap-x-8 font-semibold">
+        <li>
+          <a href="/#overview">Overview</a>
+        </li>
+        <li>
+          <a href="/#features">Features</a>
+        </li>
+        <li>
+          <a href="/#pricing">Pricing</a>
+        </li>
+        <li>
+          <a href="/blog">Blog</a>
+        </li>
+      </ul>
+    </div>
+    <span class="text-gray-500 text-center block">
+      No Rules Software SL
+    </span>
+  </div>
+</footer>

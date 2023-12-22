@@ -14,7 +14,7 @@ swap_size_mb = 3096
 #   release_command = "/app/bin/migrate"
 
 [env]
-  PHX_HOST = "demux.fly.dev"
+  PHX_HOST = "bold.video"
   PORT = "8080"
 
 [[mounts]]

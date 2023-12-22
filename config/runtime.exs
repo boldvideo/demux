@@ -58,13 +58,16 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
+  # host = System.get_env("PHX_HOST") || "example.com"
   host = System.get_env("PHX_HOST") || "example.com"
+  # host = "https://www.bold.video"
   port = String.to_integer(System.get_env("PORT") || "4000")
+  path_prefix = System.get_env("PATH_PREFIX") || "/"
 
   config :demux, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
 
   config :demux, DemuxWeb.Endpoint,
-    url: [host: host, port: 443, scheme: "https"],
+    url: [host: host, port: 443, path: path_prefix, scheme: "https"],
     http: [
       # Enable IPv6 and bind on all interfaces.
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
@@ -72,6 +75,15 @@ if config_env() == :prod do
       # for details about using IPv6 vs IPv4 and loopback vs public addresses.
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
       port: port
+    ],
+    # check_origin: :conn,
+    # check_origin: false,
+    check_origin: [
+      # "https://#{host}",
+      "https://www.bold.video",
+      "https://demux.bold.video",
+      "https://bold.video",
+      "http://localhost"
     ],
     secret_key_base: secret_key_base
 
